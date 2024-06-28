@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=locals.title ? title:'Login System'%></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            
+        }
+        
+        body{
+            background: wheat ;
+            background-repeat: no-repeat;
+            text-align:center;
+            
+        }
+        h1{
+            margin-top: 10px;
+        }
+        .text-center{
+            text-align: center;
+            padding: 80px;
+            margin:80px;
+        }
+        h1{
+            padding-bottom:10px;
+        }
+        input{
+            margin-top: 12px;
+            padding:6px;
+            border-radius: 2px;
+        }
+        small{
+            padding-right: 20px;
+            margin-top: 40px;
+            font-family:sans-serif;
+        }
+        .btn{
+            margin-top:12px;
+            padding:5px;
+            border-radius: 5px;
+            box-shadow: 2px 2px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .linker{
+            text-align: center;
+        }
+        span:hover{
+            color:chocolate;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login Page</h1>
+
+    <form action="/signinsubmit" method="GET">
+        <div class="text-center">
+            <h1>Login</h1>
+            <div class="email">
+                <i class="fa-regular fa-user"></i><input type="email" class="email" placeholder="Username" name="email"> <br>
+                <small>Enter email address</small>
+            </div>
+            <div class="password">
+                <i class="fa-solid fa-lock"></i><input type="password" class="password" placeholder="Password" name="password">
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </div>
+    </form>
+</body>
+</html>

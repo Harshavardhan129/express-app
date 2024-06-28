@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container1 {
+      height: 25rem;
+      width: 20rem;
+      background-color:rgba(0, 0, 0, 0.129);
+      color: white;
+      text-align: center;
+      padding-top: 12px;
+      border-radius: 16px;
+      border: 2px solid rgb(14, 43, 1);
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .bg {
+      background-image: url('https://img.freepik.com/free-vector/desert-forest-landscape-daytime-scene_1308-58176.jpg?size=626&ext=jpg&ga=GA1.2.463646993.1667135790');
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+<div class="bg text-center">
+  <div class="container" style="border-radius:12px; background: rgba(255, 255, 255, 0.8); padding: 20px;">
+    <br>
+    <h3 style="color:black;"><b>Welcome to Coordinates and Location Finding App</b></h3>
+    <br>
+    <p style="color:black;">Click the button to get your coordinates</p>
+    <button onclick="getLocation()" class="btn btn-success rounded-pill">Get</button>
+    <br>
+    <p id="demo" style="color:black;"></p>
+  </div>
+  <br>
+  <center>
+    <div class="container1">
+      <div class="icon">---</div>
+      <br>
+      Temperature of your location is
+      <div class="temp">-°C</div>
+      <div class="summary">----</div>
+      <div class="location"></div>
+    </div>
+  </center>
+</div>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+  fetchWeather(position.coords.latitude, position.coords.longitude);
+}
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      x.innerHTML = "User denied the request for Geolocation.";
+      break;
+    case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is unavailable.";
+      break;
+    case error.TIMEOUT:
+      x.innerHTML = "The request to get user location timed out.";
+      break;
+    case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred.";
+      break;
+  }
+}
+
+const kelvin = 273;
+let temperature = document.querySelector(".temp");
+let summary = document.querySelector(".summary");
+let loc = document.querySelector(".location");
+let icon = document.querySelector(".icon");
+
+function fetchWeather(lat, lon) {
+  const apiKey = '1372b482d39c2679bd7106a39a000637';
+  const base = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+  fetch(base)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      temperature.textContent = Math.floor(data.main.temp - kelvin) + "°C";
+      summary.textContent = data.weather[0].description;
+      loc.textContent = data.name + ", " + data.sys.country;
+      let icon1 = data.weather[0].icon;
+      icon.innerHTML = `<img src="http://openweathermap.org/img/wn/${icon1}@2x.png" style="width:100px;height:100px;border-radius:20px">`;
+    })
+    .catch((error) => {
+      console.error("Error fetching the weather data:", error);
+    });
+}
+</script>
+<br>
+<br>
+<br>
+<br>
+</div>
+</body>
+</html>
