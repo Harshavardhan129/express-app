@@ -1,0 +1,10 @@
+# Handle line endings for all files
+* text=auto
+
+# Handle line endings for specific file types
+*.js text
+*.ts text
+*.d.ts text
+
+# Ignore node_modules directory
+node_modules/* -text
